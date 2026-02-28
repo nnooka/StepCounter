@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StepCounter Dashboard</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 0; background: #f0f2f8; color: #1d2740; }
+      main { max-width: 980px; margin: 0 auto; padding: 24px; }
+      h1 { margin: 0 0 8px; }
+      .controls, .averages { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 14px; }
+      .card { background: white; border-radius: 12px; padding: 14px; box-shadow: 0 2px 8px rgba(20, 41, 87, 0.08); }
+      .card b { display: block; font-size: 0.85rem; color: #5a6684; margin-bottom: 4px; }
+      .card span { font-size: 1.3rem; font-weight: 700; }
+      canvas { width: 100%; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(20, 41, 87, 0.08); }
+      button, select, input { padding: 8px; border-radius: 8px; border: 1px solid #ccd2e2; }
+      #status { color: #405079; margin-top: 10px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Mi Fitness Step Trends</h1>
+      <p>Upload your Mi Fitness data export and review trends over day, week, month, and year.</p>
+      <div class="controls">
+        <input id="file-input" type="file" accept=".csv,.json" />
+        <select id="period">
+          <option value="day">Daily trend</option>
+          <option value="week">Weekly trend</option>
+          <option value="month">Monthly trend</option>
+          <option value="year">Yearly trend</option>
+        </select>
+        <button id="use-demo">Use demo data</button>
+      </div>
+      <div class="averages">
+        <div class="card"><b>Average per day</b><span id="avg-day">0</span></div>
+        <div class="card"><b>Average per week</b><span id="avg-week">0</span></div>
+        <div class="card"><b>Average per month</b><span id="avg-month">0</span></div>
+        <div class="card"><b>Average per year</b><span id="avg-year">0</span></div>
+      </div>
+      <canvas id="chart" width="940" height="360"></canvas>
+      <p id="status"></p>
+    </main>
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>
