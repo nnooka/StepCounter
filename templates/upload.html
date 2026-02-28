@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Upload Data – StepCounter{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+    <h2 class="mb-4 fw-bold"><i class="bi bi-upload me-2"></i>Upload MI Fitness Data</h2>
+
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <p class="text-muted">
+          Export your data from the <strong>MI Fitness</strong> app
+          (<em>Profile → Export data</em>) and upload the ZIP file here.
+          You can also upload a plain <code>.csv</code> or <code>.json</code> file.
+        </p>
+
+        <form method="post" enctype="multipart/form-data" id="uploadForm">
+          <div class="drop-zone mb-3" id="dropZone">
+            <i class="bi bi-cloud-upload display-4 text-primary"></i>
+            <p class="mt-2 mb-1 fw-semibold">Drag &amp; drop your file here</p>
+            <p class="text-muted small">or click to browse</p>
+            <input type="file" name="file" id="fileInput"
+                   accept=".zip,.csv,.json" class="d-none" />
+            <div id="fileName" class="mt-2 text-success fw-semibold"></div>
+          </div>
+
+          <div class="d-grid gap-2 d-sm-flex">
+            <button type="submit" class="btn btn-primary btn-lg px-5">
+              <i class="bi bi-upload me-1"></i>Upload &amp; Analyse
+            </button>
+            <a href="{{ url_for('demo') }}" class="btn btn-outline-secondary btn-lg px-4">
+              <i class="bi bi-play-circle me-1"></i>Try Demo
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Export instructions -->
+    <div class="card shadow-sm">
+      <div class="card-header bg-transparent fw-semibold">
+        <i class="bi bi-info-circle me-1"></i>How to export from MI Fitness
+      </div>
+      <div class="card-body">
+        <ol class="mb-0">
+          <li>Open the <strong>MI Fitness</strong> app on your phone.</li>
+          <li>Go to <strong>Profile</strong> (bottom-right icon).</li>
+          <li>Tap <strong>Settings</strong> → <strong>Export data</strong>.</li>
+          <li>Select the date range and tap <strong>Export</strong>.</li>
+          <li>Share the resulting <code>.zip</code> file to your computer and upload it here.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+  const fileName  = document.getElementById('fileName');
+
+  dropZone.addEventListener('click', () => fileInput.click());
+
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files.length) {
+      fileName.textContent = fileInput.files[0].name;
+    }
+  });
+
+  dropZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    dropZone.classList.add('drag-over');
+  });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    const files = e.dataTransfer.files;
+    if (files.length) {
+      fileInput.files = files;
+      fileName.textContent = files[0].name;
+    }
+  });
+})();
+</script>
+{% endblock %}

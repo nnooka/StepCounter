@@ -1,0 +1,108 @@
+/* =========================================================
+   StepCounter – custom styles
+   ========================================================= */
+
+:root {
+  --sc-bg: #f0f2f5;
+  --sc-card-bg: #ffffff;
+  --sc-primary: #4361ee;
+  --sc-success: #2dc653;
+  --sc-warning: #f4a261;
+  --sc-info: #4cc9f0;
+  --sc-text-muted: #6c757d;
+}
+
+body {
+  background-color: var(--sc-bg);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* ---- Navbar ---- */
+.navbar-brand {
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+}
+
+/* ---- Stat cards ---- */
+.stat-card {
+  border-radius: 12px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.10) !important;
+}
+.stat-icon {
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #1a1a2e;
+}
+.stat-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--sc-text-muted);
+  margin-top: 0.25rem;
+}
+
+/* ---- Chart containers ---- */
+.chart-container {
+  position: relative;
+  min-height: 280px;
+  padding: 1rem;
+}
+
+/* ---- General cards ---- */
+.card {
+  border-radius: 12px;
+}
+.card-header {
+  border-radius: 12px 12px 0 0 !important;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
+}
+
+/* ---- Upload drop zone ---- */
+.drop-zone {
+  border: 2.5px dashed #adb5bd;
+  border-radius: 12px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.drop-zone:hover,
+.drop-zone.drag-over {
+  background: rgba(67, 97, 238, 0.06);
+  border-color: var(--sc-primary);
+}
+
+/* ---- Table ---- */
+#dataTable thead th {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 0.65rem 1rem;
+}
+#dataTable tbody td {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+/* ---- Footer ---- */
+footer {
+  font-size: 0.8rem;
+}
+
+/* ---- Responsive tweaks ---- */
+@media (max-width: 576px) {
+  .stat-value { font-size: 1.35rem; }
+  .stat-icon  { font-size: 1.5rem; }
+}

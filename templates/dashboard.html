@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}Dashboard – StepCounter{% endblock %}
+
+{% block content %}
+<!-- Stats Cards -->
+<div class="row g-3 mb-4" id="statsRow">
+  <div class="col-6 col-md-3">
+    <div class="stat-card card h-100 border-0 shadow-sm">
+      <div class="card-body text-center">
+        <div class="stat-icon text-primary"><i class="bi bi-activity"></i></div>
+        <div class="stat-value" id="statTotal">–</div>
+        <div class="stat-label">Total Steps</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="stat-card card h-100 border-0 shadow-sm">
+      <div class="card-body text-center">
+        <div class="stat-icon text-success"><i class="bi bi-trophy"></i></div>
+        <div class="stat-value" id="statBest">–</div>
+        <div class="stat-label">Best Day</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="stat-card card h-100 border-0 shadow-sm">
+      <div class="card-body text-center">
+        <div class="stat-icon text-warning"><i class="bi bi-calendar-check"></i></div>
+        <div class="stat-value" id="statYear">–</div>
+        <div class="stat-label">This Year</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="stat-card card h-100 border-0 shadow-sm">
+      <div class="card-body text-center">
+        <div class="stat-icon text-info"><i class="bi bi-graph-up"></i></div>
+        <div class="stat-value" id="statAvg">–</div>
+        <div class="stat-label">Daily Average</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Row 1: Yearly Summary + Year Comparison -->
+<div class="row g-3 mb-4">
+  <div class="col-lg-5">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-transparent fw-semibold">
+        <i class="bi bi-bar-chart me-1 text-primary"></i>Yearly Summary
+      </div>
+      <div class="card-body chart-container">
+        <canvas id="yearlyChart"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-transparent fw-semibold">
+        <i class="bi bi-graph-up me-1 text-success"></i>Year Comparison (Monthly)
+      </div>
+      <div class="card-body chart-container">
+        <canvas id="comparisonChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Row 2: Monthly Breakdown -->
+<div class="row g-3 mb-4">
+  <div class="col-12">
+    <div class="card shadow-sm">
+      <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+        <span class="fw-semibold">
+          <i class="bi bi-calendar3 me-1 text-warning"></i>Monthly Breakdown
+        </span>
+        <select class="form-select form-select-sm w-auto" id="yearSelect">
+          {% for year in years %}
+            <option value="{{ year }}">{{ year }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="card-body chart-container">
+        <canvas id="monthlyChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Data Table -->
+<div class="row g-3">
+  <div class="col-12">
+    <div class="card shadow-sm">
+      <div class="card-header bg-transparent fw-semibold">
+        <i class="bi bi-table me-1 text-info"></i>Recent Entries (last 30 days)
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover table-sm mb-0" id="dataTable">
+            <thead class="table-dark">
+              <tr>
+                <th>Date</th>
+                <th class="text-end">Steps</th>
+                <th class="text-end">Distance (km)</th>
+                <th class="text-end">Calories</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <tr><td colspan="4" class="text-center text-muted py-3">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
