@@ -21,6 +21,12 @@ const MONTH_NAMES = [
 ];
 
 // ---- Shared chart options helpers ----
+function formatYAxisValue(val) {
+  if (val >= 1000000) return (val / 1000000).toFixed(1) + 'M';
+  if (val >= 1000) return (val / 1000).toFixed(0) + 'k';
+  return val;
+}
+
 function baseChartOptions(yLabel = 'Steps') {
   return {
     responsive: true,
@@ -36,12 +42,7 @@ function baseChartOptions(yLabel = 'Steps') {
     scales: {
       y: {
         beginAtZero: true,
-        ticks: {
-          // Standard numbers used for broad browser compatibility (avoid ES2021 separators)
-          callback: val => val >= 1000000
-            ? (val / 1000000).toFixed(1) + 'M'
-            : val >= 1000 ? (val / 1000).toFixed(0) + 'k' : val,
-        },
+        ticks: { callback: formatYAxisValue },
         grid: { color: 'rgba(0,0,0,0.05)' },
       },
       x: { grid: { display: false } },
