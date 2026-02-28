@@ -11,7 +11,7 @@ StepCounter is a small browser app that helps you explore historical walking dat
 
 ## Run locally
 
-1. Open `/home/runner/work/StepCounter/StepCounter/index.html` in your browser.
+1. Open `index.html` in your browser.
 2. Upload your Mi Fitness export file.
 
 ## Test

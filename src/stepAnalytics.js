@@ -46,7 +46,7 @@ function parseJson(text) {
   return records
     .map((record) => ({
       date: normalizeDate(record.date ?? record.day ?? record.time ?? record.timestamp),
-      steps: normalizeSteps(record.steps ?? record.stepCount ?? record.count ?? record.value)
+      steps: normalizeSteps(record.steps ?? record.stepCount ?? record.count)
     }))
     .filter((entry) => entry.date && entry.steps !== null);
 }
@@ -98,12 +98,17 @@ function average(total, count) {
   return count === 0 ? 0 : Math.round(total / count);
 }
 
+function countPeriods(records, period) {
+  const periods = new Set(records.map((record) => getPeriodKey(record.date, period)));
+  return periods.size;
+}
+
 export function calculateAverages(records) {
   const totalSteps = records.reduce((sum, record) => sum + record.steps, 0);
   return {
-    day: average(totalSteps, aggregateSteps(records, "day").length),
-    week: average(totalSteps, aggregateSteps(records, "week").length),
-    month: average(totalSteps, aggregateSteps(records, "month").length),
-    year: average(totalSteps, aggregateSteps(records, "year").length)
+    day: average(totalSteps, countPeriods(records, "day")),
+    week: average(totalSteps, countPeriods(records, "week")),
+    month: average(totalSteps, countPeriods(records, "month")),
+    year: average(totalSteps, countPeriods(records, "year"))
   };
 }
